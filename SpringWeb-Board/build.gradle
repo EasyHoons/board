@@ -24,12 +24,26 @@ dependencies {
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
     
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+<<<<<<< HEAD
+<<<<<<< HEAD
+    compileOnly 'org.projectlombok:lombok'
+=======
     
 <<<<<<< HEAD
     compileOnly 'org.projectlombok:lombok'
 =======
     //lombok
 	compileOnly 'org.projectlombok:lombok'
+>>>>>>> refs/remotes/origin/main
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> branch 'main' of https://github.com/gombasan/board.git
+=======
+    compileOnly 'org.projectlombok:lombok'
+>>>>>>> refs/remotes/origin/HAN
+=======
+>>>>>>> refs/remotes/origin/main
+=======
 >>>>>>> refs/remotes/origin/main
     annotationProcessor 'org.projectlombok:lombok'
 

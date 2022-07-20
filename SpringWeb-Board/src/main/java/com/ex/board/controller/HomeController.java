@@ -4,25 +4,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import lombok.Getter;
 
 
 @Controller
 public class HomeController {
+
+
 	
 	@RequestMapping("/")
-	public String root(){
-		return "redirect:/index";
+	    public String root() {
+	        return "redirect:/message/list";
 	}
 	
-	@ResponseBody
-	@RequestMapping("/index")
-	public String index() {
-		return "hghi";
+			
 		
-		
-		
-	}
+}
 	
 
-}

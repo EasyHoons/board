@@ -7,7 +7,9 @@
     </thead>
     <tbody>
         <tr th:each="message : ${messageList}">
-            <td th:text="${message.subject}"></td>
+            <td>
+            	<a th:href="@{|/message/list/${message.id}|}" th:text="${message.subject}"></a>
+            </td>
             <td th:text="${message.createDate}"></td>
         </tr>
     </tbody>

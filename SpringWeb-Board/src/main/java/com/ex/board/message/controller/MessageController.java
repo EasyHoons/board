@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ex.board.entity.message.Message;
-import com.ex.board.repository.MessageRepository;
+import com.ex.board.service.MessageService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,15 +16,24 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MessageController {
 
-	 private final  MessageRepository messageRepository;
+	 private final  MessageService messageService;
 	
 
 	 @RequestMapping("/message/list")
      public String messageList(Model model) {
-	  List<Message> messageList = this.messageRepository.findAll();
-     model.addAttribute("messageList", messageList);
+		 
+		List<Message> messageList = messageService.getList(); 
+		model.addAttribute("messageList", messageList);
         return "message_list";
         
     }
+	@RequestMapping(value = "/message/list/{id}")
+	public String detail(Model model, @PathVariable Integer id) {
+		Message message = this.messageService.getMessage(id);
+		model.addAttribute("message", message);
+		return "message_detail";
+	}
 	
+	
+	 
 }

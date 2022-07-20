@@ -1,26 +1,3 @@
-<<<<<<< HEAD
-<table>
-    <thead>
-        <tr>
-            <th>제목</th>
-            <th>작성일시</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr th:each="message : ${messageList}">
-            <td> 
-            
-            	<a th:href = "@{|/message/list/${message.id}|}" th:text="${message.subject}"></a>
-            
-            </td>
-=======
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
 <table>
     <thead>
         <tr>
@@ -31,7 +8,6 @@
     <tbody>
         <tr th:each="message : ${messageList}">
             <td th:text="${message.subject}"></td>
->>>>>>> refs/remotes/origin/main
             <td th:text="${message.createDate}"></td>
         </tr>
     </tbody>

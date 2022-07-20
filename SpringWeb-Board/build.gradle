@@ -35,10 +35,13 @@ dependencies {
     //lombok
 	compileOnly 'org.projectlombok:lombok'
 >>>>>>> refs/remotes/origin/main
+<<<<<<< HEAD
 >>>>>>> branch 'main' of https://github.com/gombasan/board.git
 =======
     compileOnly 'org.projectlombok:lombok'
 >>>>>>> refs/remotes/origin/HAN
+=======
+>>>>>>> refs/remotes/origin/main
     annotationProcessor 'org.projectlombok:lombok'
 
 }

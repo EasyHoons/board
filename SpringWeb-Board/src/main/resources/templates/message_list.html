@@ -1,5 +1,7 @@
-<table>
-    <thead>
+<html layout:decorate="~{layout}">
+<div layout:fragment = "content"class="container my-3">
+<table class="table">
+    <thead class="table-dark">
         <tr>
             <th>제목</th>
             <th>작성일시</th>
@@ -10,7 +12,14 @@
             <td>
             	<a th:href="@{|/message/detail/${message.id}|}" th:text="${message.subject}"></a>
             </td>
-            <td th:text="${message.createDate}"></td>
+            <td th:text="${#temporals.format(message.createDate, 'yyyy-MM-dd HH:mm')}"></td>
         </tr>
     </tbody>
 </table>
+<<<<<<< HEAD
+<a th:href="@{/message/create}" class="btn btn-primary">게시물 등록</a>
+</div>
+</html>
+
+=======
+>>>>>>> refs/remotes/origin/KIM

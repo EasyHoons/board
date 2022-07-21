@@ -1,4 +1,4 @@
-package com.ex.board.message.controller;
+package com.ex.board.controller.message;
 
 import java.util.List;
 

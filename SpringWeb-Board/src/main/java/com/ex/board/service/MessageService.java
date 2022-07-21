@@ -1,5 +1,6 @@
 package com.ex.board.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,4 +25,12 @@ public class MessageService {
 		
 		return message.get();
 		}
+	
+	public void create(String subject, String content) {
+		Message ms = new Message();
+		ms.setSubject(subject);
+		ms.setContent(content);
+		ms.setCreateDate(LocalDateTime.now());
+		messageRepository.save(ms);
+	}
 }

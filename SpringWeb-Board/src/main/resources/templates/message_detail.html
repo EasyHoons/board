@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <html layout:decorate="~{layout}">
 <div layout:fragment="content" class="container my-3">
 
@@ -42,3 +43,19 @@
 </div>
 </div>
 </html>
+=======
+<h1 th:text="${message.subject}"></h1>
+<div th:text="${message.content}"></div>
+
+<h5 th:text="|${#lists.size(message.commentList)}개의 답변이 있습니다.|"></h5>
+<div>
+    <ul>
+        <li th:each="comment : ${message.commentList}" th:text="${comment.content}"></li>
+    </ul>
+</div>
+
+<form th:action="@{|/comment/create/${message.id}|}" method="post">
+    <textarea name="content" id="content" rows="15"></textarea>
+    <input type="submit" value="답변등록">
+</form>
+>>>>>>> refs/remotes/origin/KIM

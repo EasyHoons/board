@@ -1,4 +1,4 @@
-package com.ex.board.message.controller;
+package com.ex.board.controller.message;
 
 import java.util.List;
 
@@ -12,6 +12,8 @@ import com.ex.board.entity.message.Message;
 import com.ex.board.service.MessageService;
 
 import lombok.RequiredArgsConstructor;
+
+
 
 @Controller
 @RequiredArgsConstructor
@@ -28,7 +30,7 @@ public class MessageController {
         return "message_list";
         
     }
-	@RequestMapping(value = "/message/list/{id}")
+	@RequestMapping(value = "/message/detail/{id}")
 	public String detail(Model model, @PathVariable Integer id) {
 		Message message = this.messageService.getMessage(id);
 		model.addAttribute("message", message);

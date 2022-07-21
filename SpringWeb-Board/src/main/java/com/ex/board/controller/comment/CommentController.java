@@ -1,5 +1,6 @@
 package com.ex.board.controller.comment;
 
+
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -33,6 +34,7 @@ public class CommentController {
 	        }
 	        	
 	        this.commentService.create(message, commmentForm.getContent());
+
 	        return String.format("redirect:/message/detail/%s", id);
 
           }

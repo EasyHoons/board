@@ -57,5 +57,6 @@ public class MessageController {
 		messageService.create(messageFrom.getSubject(), messageFrom.getContent());
 		return "redirect:/message/list";
 	}
+
 	 
 }

@@ -1,9 +1,14 @@
 package com.ex.board.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.ex.board.entity.message.Message;
@@ -33,4 +38,12 @@ public class MessageService {
 		ms.setCreateDate(LocalDateTime.now());
 		messageRepository.save(ms);
 	}
+	 public Page<Message> getList(int page) {
+		 	List<Sort.Order> sorts = new ArrayList<>();
+		 	sorts.add(Sort.Order.desc("createDate"));
+		 
+	        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
+	        return this.messageRepository.findAll(pageable);
+	    }
+	
 }

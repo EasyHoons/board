@@ -1,9 +1,8 @@
 package com.ex.board.controller.message;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ex.board.entity.message.Message;
 import com.ex.board.service.CommentForm;
@@ -28,10 +28,10 @@ public class MessageController {
 	
 
 	 @RequestMapping("list")
-     public String messageList(Model model) {
+     public String messageList(Model model, @RequestParam(value="page", defaultValue="0") int page) {
 		 
-		List<Message> messageList = messageService.getList(); 
-		model.addAttribute("messageList", messageList);
+		 Page<Message> paging = this.messageService.getList(page);
+	        model.addAttribute("paging", paging);
         return "message_list";
         
     }

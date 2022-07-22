@@ -33,7 +33,7 @@
                 </a>
             </li>
             <li th:each="page: ${#numbers.sequence(1, paging.totalPages-1)}"
-            th:if="${page >= paging.number-5 and page <= paging.number+5}">
+            th:if="${page >= paging.number-2 and page <= paging.number+2}">
 
                 <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
             </li>

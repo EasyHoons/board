@@ -20,8 +20,10 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class MessageService {
 	private final MessageRepository messageRepository;
+//	private final Pageable pageable;
 	
 	public List<Message> getList(){
+		
 		return messageRepository.findAll();
 	}
 	
@@ -41,9 +43,13 @@ public class MessageService {
 	 public Page<Message> getList(int page) {
 		 	List<Sort.Order> sorts = new ArrayList<>();
 		 	sorts.add(Sort.Order.desc("createDate"));
-		 
+//		 	page = (this.pageable.getPageNumber() == 0) ? 0 : (this.pageable.getPageNumber() - 1);
+		 	
 	        Pageable pageable = PageRequest.of(page, 5, Sort.by(sorts));
 	        return this.messageRepository.findAll(pageable);
 	    }
-	
+
+	 public Long count() {
+	        return messageRepository.count();
+	    }
 }

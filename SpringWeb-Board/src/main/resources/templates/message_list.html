@@ -77,7 +77,7 @@
                 </a>
             </li>
          <ul class="pagination justify-content-center">
-         <li th:classappend="${pageNumber > pageSize} ? 'disabled'" class="page-item">
+         <li th:classappend="${!paging.hasNext} ? 'disabled'" class="page-item">
           <a class="page-link" th:href="@{|?page=${paging.totalPages-1}|}">
             <span class="sr-only">마지막</span>
             <span>&raquo;</span>

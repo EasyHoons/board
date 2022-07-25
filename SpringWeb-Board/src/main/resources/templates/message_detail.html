@@ -33,10 +33,8 @@
     <!-- 답변 작성 -->
 <form th:action="@{|/comment/create/${message.id}|}" th:object="${commentForm}" method="post">
 
-	<div class="alert alert-danger" role= "alert" th:if="${#fields.hasAnyErrors()}">
-		<div th:each="err : ${#fields.allErrors()}" th:text="${err}"/>
-	</div>
-    <textarea name="content" rows="10" class="form-control"></textarea>
+	<div th:replace="form_errors :: formErrorsFragment"></div>
+    <textarea name="*{content}" rows="10" class="form-control"></textarea>
     <input type="submit" class="btn btn-primary my-2" value="댓글등록">
 </form>
 </div>

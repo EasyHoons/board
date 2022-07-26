@@ -43,11 +43,12 @@ public class MessageService {
 		return message.get();
 		}
 	
-	public void create(String subject, String content) {
+	public void create(String subject, String content, SiteUser user) {
 		Message ms = new Message();
 		ms.setSubject(subject);
 		ms.setContent(content);
 		ms.setCreateDate(LocalDateTime.now());
+		ms.setAuthor(user);
 		messageRepository.save(ms);
 	}
 	 public Page<Message> getList(int page, String kw) {

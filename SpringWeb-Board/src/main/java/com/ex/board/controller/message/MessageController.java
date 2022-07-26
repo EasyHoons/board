@@ -1,8 +1,11 @@
 package com.ex.board.controller.message;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ex.board.Security.SiteUser;
+import com.ex.board.Security.UserService;
 import com.ex.board.entity.message.Message;
 import com.ex.board.service.CommentForm;
 import com.ex.board.service.MessageForm;
@@ -25,6 +30,7 @@ import lombok.RequiredArgsConstructor;
 public class MessageController {
 
 	 private final  MessageService messageService;
+	 private final UserService userService;
 	
 
 	 @RequestMapping("list")
@@ -44,19 +50,22 @@ public class MessageController {
 		return "message_detail";
 	}
 	
-	
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("create")
 	public String messageCreate(MessageForm messageForm) {
 		
 		return "message_Form";
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping("create")
-	public String messageCreate(@Valid MessageForm messageFrom, BindingResult bindingResult) {
+	public String messageCreate(@Valid MessageForm messageFrom, BindingResult bindingResult, Principal principal) {
 		if(bindingResult.hasErrors()) {
 			return "message_form";
 		}
-		messageService.create(messageFrom.getSubject(), messageFrom.getContent());
+		
+		SiteUser siteUser = this.userService.getUser(principal.getName());
+		messageService.create(messageFrom.getSubject(), messageFrom.getContent(),siteUser);
 		return "redirect:/message/list";
 	}
 

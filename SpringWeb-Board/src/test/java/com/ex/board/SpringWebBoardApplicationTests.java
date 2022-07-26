@@ -20,7 +20,7 @@ class SpringWebBoardApplicationTests {
 	        for (int i = 1; i <= 50; i++) {
 	            String subject = String.format("테스트 데이터입니다:[%03d]", i);
 	            String content = "페이징 테스트 데이터입니다.";
-	            this.messageService.create(subject, content);
+	            this.messageService.create(subject, content,null);
 }
 	    }
 }

@@ -39,4 +39,6 @@ public class Message {
     
     @ManyToOne
     private SiteUser author;
+    
+    
 }

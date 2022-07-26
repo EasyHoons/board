@@ -10,6 +10,9 @@
             <div class="card-text" style="white-space: pre-line;" th:text="${message.content}"></div>
             <div class="d-flex justify-content-end">
                 <div class="badge bg-light text-dark p-2 text-start">
+                <div class="mb-2">
+                    <span th:if="${message.author != null}" th:text="${message.author.username}"></span>
+                </div>
                     <div th:text="${#temporals.format(message.createDate, 'yyyy-MM-dd HH:mm')}"></div>
                 </div>
             </div>
@@ -27,6 +30,9 @@
                 	<div class="mb-2">
                     	<span th:if="${comment.author != null}" th:text="${comment.author.username}"></span>
                		</div>
+               		<div class="mb-2">
+                    <span th:if="${comment.author != null}" th:text="${comment.author.username}"></span>
+                </div>
                     <div th:text="${#temporals.format(comment.createDate, 'yyyy-MM-dd HH:mm')}"></div>
                 </div>
             </div>

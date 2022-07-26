@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.ex.board.Security.SiteUser;
 import com.ex.board.entity.message.Message;
 
 import lombok.Getter;
@@ -29,5 +30,8 @@ public class Comment {
 
     @ManyToOne
     private Message message;
+    
+    @ManyToOne
+    private SiteUser author;
 
 }

@@ -9,8 +9,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.ex.board.Security.SiteUser;
 import com.ex.board.entity.comment.Comment;
 
 import lombok.Getter;
@@ -34,4 +36,7 @@ public class Message {
     
     @OneToMany(mappedBy = "message", cascade = CascadeType.REMOVE)
     private List<Comment> commentList;
+    
+    @ManyToOne
+    private SiteUser author;
 }

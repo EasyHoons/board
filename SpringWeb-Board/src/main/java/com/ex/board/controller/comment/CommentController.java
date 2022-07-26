@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ex.board.entity.message.Message;
 import com.ex.board.service.CommentForm;
+import com.ex.board.service.CommentService;
 import com.ex.board.service.MessageService;
-import com.ex.board.service.comment.CommentService;
 
 import lombok.RequiredArgsConstructor;
 

@@ -1,4 +1,4 @@
-package com.ex.board.service.comment;
+package com.ex.board.service;
 
 import java.time.LocalDateTime;
 

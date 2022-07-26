@@ -30,9 +30,6 @@
                 	<div class="mb-2">
                     	<span th:if="${comment.author != null}" th:text="${comment.author.username}"></span>
                		</div>
-               		<div class="mb-2">
-                    <span th:if="${comment.author != null}" th:text="${comment.author.username}"></span>
-                </div>
                     <div th:text="${#temporals.format(comment.createDate, 'yyyy-MM-dd HH:mm')}"></div>
                 </div>
             </div>

@@ -35,12 +35,14 @@ public class MessageController {
 
 	 @RequestMapping("list")
      public String messageList(Model model, @RequestParam(value="page", defaultValue="0") int page,
-    		 @RequestParam(value = "kw", defaultValue = "") String kw) {
+    		 @RequestParam(value = "kw", defaultValue = "") String kw, 
+    		 @RequestParam(value = "Type", defaultValue="") String Type){
 		 
-		 Page<Message> paging = this.messageService.getList(page,kw);
+		 Page<Message> paging = this.messageService.getList(page,kw,Type);
 	        model.addAttribute("paging", paging);
 	        model.addAttribute("kw", kw);
-        return "message_list";
+	        model.addAttribute("Type",Type);
+	        return "message_list";
         
     }
 	@RequestMapping(value = "detail/{id}")

@@ -51,13 +51,37 @@ public class MessageService {
 		ms.setAuthor(user);
 		messageRepository.save(ms);
 	}
-	 public Page<Message> getList(int page, String kw) {
+	private Specification<Message> serch(String kw, String Type) {
+		return new Specification<>() {
+			private static final long serialVersionUID = 1L;
+			
+			public Predicate toPredicate(Root<Message> q, CriteriaQuery<?> query, CriteriaBuilder cb) {
+				query.distinct(true);  // 중복을 제거 
+				Join<Message, SiteUser> u1 = q.join("author", JoinType.LEFT);
+				Join<Message, Comment> a = q.join("commentList", JoinType.LEFT);
+				Join<Comment, SiteUser> u2 = a.join("author", JoinType.LEFT);
+				
+				if(Type.equalsIgnoreCase("3")) {
+					return	cb.or(cb.like(u1.get("username"), "%" + kw + "%"),    // 질문 작성자 
+						cb.like(u2.get("username"), "%" + kw + "%"));   // 답변 작성자
+				}
+				if(Type.equalsIgnoreCase("comment")) {
+					return cb.or(cb.like(a.get("content"), "%" + kw + "%"));      // 답변 내용 
+				}
+				return cb.or(cb.like(q.get("subject"), "%" + kw + "%"), // 제목 
+						cb.like(q.get("content"), "%" + kw + "%"));  // 내용  
+			}
+			
+		};
+		
+	}
+	
+	 public Page<Message> getList(int page, String kw, String Type) {
 		 	List<Sort.Order> sorts = new ArrayList<>();
 		 	sorts.add(Sort.Order.desc("createDate"));
-//		 	page = (this.pageable.getPageNumber() == 0) ? 0 : (this.pageable.getPageNumber() - 1);
 		 	
 	        Pageable pageable = PageRequest.of(page, 5, Sort.by(sorts));
-	        Specification<Message> spec = serch(kw);
+	        Specification<Message> spec = serch(kw,Type);
 	        return this.messageRepository.findAll(spec, pageable);
 	    }
 
@@ -65,22 +89,4 @@ public class MessageService {
 	        return messageRepository.count();
 	    }
 	 
-	 private Specification<Message> serch(String kw) {
-		 return new Specification<>() {
-			 private static final long serialVersionUID = 1L;
-			 
-	            public Predicate toPredicate(Root<Message> q, CriteriaQuery<?> query, CriteriaBuilder cb) {
-	                query.distinct(true);  // 중복을 제거 
-	                Join<Message, SiteUser> u1 = q.join("author", JoinType.LEFT);
-	                Join<Message, Comment> a = q.join("commentList", JoinType.LEFT);
-	                Join<Comment, SiteUser> u2 = a.join("author", JoinType.LEFT);
-	                return cb.or(cb.like(q.get("subject"), "%" + kw + "%"), // 제목 
-	                        cb.like(q.get("content"), "%" + kw + "%"),      // 내용 
-	                        cb.like(u1.get("username"), "%" + kw + "%"),    // 질문 작성자 
-	                        cb.like(a.get("content"), "%" + kw + "%"),      // 답변 내용 
-	                        cb.like(u2.get("username"), "%" + kw + "%"));   // 답변 작성자 
-	            }
-			 
-		 };
-	 }
 }

@@ -11,6 +11,7 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -101,9 +102,10 @@ public class MessageService {
 	 public void delete(Message message) {
 	        this.messageRepository.delete(message);
 	    }
-	 
+	 //추천 
 	 public void vote(Message message, SiteUser siteUser) {
 	        message.getVoter().add(siteUser);
 	        this.messageRepository.save(message);
 	    }
+
 }

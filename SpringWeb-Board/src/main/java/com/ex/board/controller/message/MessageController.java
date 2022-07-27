@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,9 +46,12 @@ public class MessageController {
 	        return "message_list";
         
     }
+	 
 	@RequestMapping(value = "detail/{id}")
+	@Transactional
 	public String detail(Model model, @PathVariable Integer id, CommentForm commentForm) {
 		Message message = this.messageService.getMessage(id);
+		message.setHit(message.getHit()+1);
 		model.addAttribute("message", message);
 		return "message_detail";
 	}

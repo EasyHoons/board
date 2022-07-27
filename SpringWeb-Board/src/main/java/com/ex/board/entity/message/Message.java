@@ -47,4 +47,7 @@ public class Message {
     @ManyToMany
     Set<SiteUser> voter;
     
+    
+    @Column(columnDefinition = "int default 0", nullable = false)
+    private int hit;
 }

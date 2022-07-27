@@ -27,6 +27,7 @@
         	<th>번호</th>
             <th style="width:50%">제목</th>
             <th>글쓴이</th>
+            <th>조회수</th>
             <th>작성일시</th>
         </tr>
     </thead>
@@ -41,6 +42,7 @@
                     </span>
             </td>
             <td><span th:if="${message.author != null}" th:text="${message.author.username}"></span></td>
+            <td th:text=${message.hit}></td>
             <td th:text="${#temporals.format(message.createDate, 'yyyy-MM-dd HH:mm')}"></td>
             
         </tr>

@@ -4,9 +4,7 @@ import java.security.Principal;
 
 import javax.validation.Valid;
 
-
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.ex.board.Security.SiteUser;
 import com.ex.board.Security.UserService;
@@ -118,4 +115,13 @@ public class MessageController {
         return "redirect:/";
     }
 	 
+	@PreAuthorize("isAuthenticated()")
+    @GetMapping("/vote/{id}")
+    public String questionVote(Principal principal, @PathVariable("id") Integer id) {
+        Message message = this.messageService.getMessage(id);
+        SiteUser siteUser = this.userService.getUser(principal.getName());
+        this.messageService.vote(message, siteUser);
+        return String.format("redirect:/message/detail/%s", id);
+    }
+	
 }

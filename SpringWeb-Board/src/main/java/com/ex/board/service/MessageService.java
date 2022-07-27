@@ -101,4 +101,9 @@ public class MessageService {
 	 public void delete(Message message) {
 	        this.messageRepository.delete(message);
 	    }
+	 
+	 public void vote(Message message, SiteUser siteUser) {
+	        message.getVoter().add(siteUser);
+	        this.messageRepository.save(message);
+	    }
 }

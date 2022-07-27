@@ -26,12 +26,15 @@ public class Comment {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    private LocalDateTime createDate;
-
     @ManyToOne
     private Message message;
     
     @ManyToOne
     private SiteUser author;
+    
+    private LocalDateTime createDate;
+    
+    private LocalDateTime modifyDate;
+    
 
 }

@@ -89,4 +89,16 @@ public class MessageService {
 	        return messageRepository.count();
 	    }
 	 
+	 //수정
+	 public void modify(Message message, String subject, String content) {
+		 message.setSubject(subject);
+		 message.setContent(content);
+		 message.setModifyDate(LocalDateTime.now());
+	        this.messageRepository.save(message);
+	    }
+	 
+	 //삭제
+	 public void delete(Message message) {
+	        this.messageRepository.delete(message);
+	    }
 }

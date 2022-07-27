@@ -5,20 +5,39 @@
 <div class="container my-3">
     <!-- 질문 -->
     <h2 class="border-bottom py-2" th:text="${message.subject}"></h2>
-    <div class="card my-3">
-        <div class="card-body">
-            <div class="card-text" style="white-space: pre-line;" th:text="${message.content}"></div>
-            <div class="d-flex justify-content-end">
-                <div class="badge bg-light text-dark p-2 text-start">
-                <div class="mb-2">
-                    <span th:if="${message.author != null}" th:text="${message.author.username}"></span>
-                </div>
-                    <div th:text="${#temporals.format(message.createDate, 'yyyy-MM-dd HH:mm')}"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- 답변의 갯수 표시 -->
+		<div class="card my-3">
+			<div class="card-body">
+				<div class="card-text" style="white-space: pre-line;"
+					th:text="${message.content}"></div>
+				<div class="d-flex justify-content-end">
+					<div class="badge bg-light text-dark p-2 text-start">
+						<div class="mb-2">
+							<span th:if="${message.author != null}"
+								th:text="${message.author.username}"></span>
+						</div>
+						<div
+							th:text="${#temporals.format(message.createDate, 'yyyy-MM-dd HH:mm')}"></div>
+					</div>
+				</div>
+
+				<div class="my-3">
+				<!-- 로그인한 사용자와 오브젝트의 사용자가 다르면 보이지않음 -->
+					<a th:href="@{|/message/modify/${message.id}|}"
+						class="btn btn-sm btn-outline-secondary"
+						sec:authorize="isAuthenticated()"
+						th:if="${message.author != null and #authentication.getPrincipal().getUsername() == message.author.username}"
+						th:text="수정"></a>
+				<!-- href를 자바스크립트로 돌린이유:확인메시지 -->
+					<a  href="javascript:void(0);"
+						class="delete btn btn-sm btn-outline-secondary"
+						th:data-uri="@{|/message/delete/${message.id}|}"
+						sec:authorize="isAuthenticated()"
+						th:if="${message.author != null and #authentication.getPrincipal().getUsername() == message.author.username}"
+						th:text="삭제"></a>
+				</div>
+			</div>
+		</div>
+		<!-- 답변의 갯수 표시 -->
     <h5 class="border-bottom my-3 py-2" 
         th:text="|${#lists.size(message.commentList)}개의 답변이 있습니다.|"></h5>
     <!-- 답변 반복 시작 -->
@@ -33,6 +52,21 @@
                     <div th:text="${#temporals.format(comment.createDate, 'yyyy-MM-dd HH:mm')}"></div>
                 </div>
             </div>
+            
+            <div class="my-3">
+            <!-- 답변수정 -->
+            <a th:href="@{|/comment/modify/${comment.id}|}" class="btn btn-sm btn-outline-secondary"
+                sec:authorize="isAuthenticated()"
+                th:if="${comment.author != null and #authentication.getPrincipal().getUsername() == comment.author.username}"
+                th:text="수정"></a>
+             
+            <!-- 답변삭제 -->
+        	<a href="javascript:void(0);" th:data-uri="@{|/comment/delete/${comment.id}|}"
+                class="delete btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated()"
+                th:if="${comment.author != null and #authentication.getPrincipal().getUsername() == comment.author.username}"
+                th:text="삭제"></a>
+        	</div>
+        	
         </div>
     </div>
     <!-- 답변 반복 끝  -->
@@ -45,6 +79,17 @@
 		</form>
 	</div>
 </div>
+
+<script layout:fragment="javaScript" type='text/javascript'>
+const delete_elements = document.getElementsByClassName("delete");
+Array.from(delete_elements).forEach(function(element) {
+    element.addEventListener('click', function() {
+        if(confirm("정말로 삭제하시겠습니까?")) {
+            location.href = this.dataset.uri;//확인버튼 클릭시 th:data-uri 호출
+        };
+    });
+});
+</script>
 </html>
 
 

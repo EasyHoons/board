@@ -4,7 +4,9 @@ import java.security.Principal;
 
 import javax.validation.Valid;
 
+
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.ex.board.Security.SiteUser;
 import com.ex.board.Security.UserService;
@@ -70,6 +73,49 @@ public class MessageController {
 		messageService.create(messageFrom.getSubject(), messageFrom.getContent(),siteUser);
 		return "redirect:/message/list";
 	}
+	
+	//수정. 수정버튼 누르면 요청. message_Form에서 action속성없이 전달되는 URL(URL 그대로 요청)을 받기위해 id값도 추가.
+	@PreAuthorize("isAuthenticated()")
+    @GetMapping("/modify/{id}")
+    public String messageModify(MessageForm messageForm, @PathVariable("id") Integer id, Principal principal) {
+        Message message = this.messageService.getMessage(id);
+        //현재 로그인된유저(principal)와 message객체의 유저가 다르면 출력
+//        if(!message.getAuthor().getUsername().equals(principal.getName())) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
+//        }
+        messageForm.setSubject(message.getSubject());
+        messageForm.setContent(message.getContent());
+        return "message_form";
+    }
+	
+	//수정. 수정폼에서 저장하기 누르면 요청.
+	@PreAuthorize("isAuthenticated()")
+    @PostMapping("modify/{id}")
+    public String messageModify(@Valid MessageForm messageForm, BindingResult bindingResult, 
+            Principal principal, @PathVariable("id") Integer id) {
+        if (bindingResult.hasErrors()) {
+            return "message_form";
+        }
+        
+        Message message = this.messageService.getMessage(id);
+//        if (!message.getAuthor().getUsername().equals(principal.getName())) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
+//        }
+        this.messageService.modify(message, messageForm.getSubject(), messageForm.getContent());
+        return String.format("redirect:/message/detail/%s", id);
+    }
 
+	
+	//삭제. id로 부른 오브젝트를 삭제.
+	@PreAuthorize("isAuthenticated()")
+    @GetMapping("delete/{id}")
+    public String messageDelete(Principal principal, @PathVariable("id") Integer id) {
+		Message message = this.messageService.getMessage(id);
+//        if (!message.getAuthor().getUsername().equals(principal.getName())) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
+//        }
+        this.messageService.delete(message);
+        return "redirect:/";
+    }
 	 
 }

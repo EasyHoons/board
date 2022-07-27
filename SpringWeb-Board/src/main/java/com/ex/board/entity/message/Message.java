@@ -31,14 +31,16 @@ public class Message {
 
     @Column(columnDefinition = "TEXT")
     private String content;
-
-    private LocalDateTime createDate;
     
     @OneToMany(mappedBy = "message", cascade = CascadeType.REMOVE)
     private List<Comment> commentList;
     
     @ManyToOne
     private SiteUser author;
+    
+    private LocalDateTime createDate;
+    
+    private LocalDateTime modifyDate;
     
     
 }

@@ -24,6 +24,7 @@ public class CommentService {
 		comment.setCreateDate(LocalDateTime.now());
 		comment.setMessage(message);
 		comment.setAuthor(author);
+		this.commentRepository.save(comment);
 		return comment;
 
 		

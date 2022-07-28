@@ -37,7 +37,7 @@ public class CommentController {
 
 	 	@PreAuthorize("isAuthenticated()")
 	    @PostMapping("create/{id}")
-	    public String createComment(Model model, @PathVariable("id") Integer id, @Valid CommentForm commmentForm, BindingResult bindingResult,Principal principal) {
+	    public String createComment(Model model, @PathVariable("id") Integer id, @Valid CommentForm commmentForm, BindingResult bindingResult,Principal principal, Comment commentForm) {
 	        Message message = this.messageService.getMessage(id);
 	        SiteUser siteUser = this.userService.getUser(principal.getName());
 	        if(bindingResult.hasErrors()) {
@@ -45,9 +45,10 @@ public class CommentController {
 	        	return "message_detail";
 	        }
 	        	
-	        this.commentService.create(message, commmentForm.getContent(),siteUser);
-
-	        return String.format("redirect:/message/detail/%s", id);
+	       Comment comment = this.commentService.create(message,
+	               commentForm.getContent(), siteUser);
+	        return String.format("redirect:/message/detail/%s#comment_%s",
+	                comment.getMessage().getId(), comment.getId());
 
           }
 	 	
@@ -76,7 +77,8 @@ public class CommentController {
 	            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
 	        }
 	        this.commentService.modify(comment, commentForm.getContent());
-	        return String.format("redirect:/message/detail/%s", comment.getMessage().getId());
+	        return String.format("redirect:/message/detail/%s#comment_%s", 
+	                comment.getMessage().getId(), comment.getId());
 	    }
 	 	
 	 	//삭제
@@ -97,7 +99,8 @@ public class CommentController {
 	        Comment comment = this.commentService.getComment(id);
 	        SiteUser siteUser = this.userService.getUser(principal.getName());
 	        this.commentService.vote(comment, siteUser);
-	        return String.format("redirect:/message/detail/%s", comment.getMessage().getId());
+	        return String.format("redirect:/message/detail/%s#comment_%s", 
+	                comment.getMessage().getId(), comment.getId());
 	    }
 	 	
 }

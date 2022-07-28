@@ -18,14 +18,16 @@ public class CommentService {
 
 	private final CommentRepository commentRepository;
 
-	public void create(Message message, String content, SiteUser author) {
+	public Comment create(Message message, String content, SiteUser author) {
 		Comment comment = new Comment();
 		comment.setContent(content);
 		comment.setCreateDate(LocalDateTime.now());
 		comment.setMessage(message);
 		comment.setAuthor(author);
-
 		this.commentRepository.save(comment);
+		return comment;
+
+		
 	}
 
 	// 답변조회

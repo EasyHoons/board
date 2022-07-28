@@ -51,6 +51,8 @@ public class MessageController {
 	@Transactional
 	public String detail(Model model, @PathVariable Integer id, CommentForm commentForm) {
 		Message message = this.messageService.getMessage(id);
+		
+		//디테일페이지를 호출할때 Hit Count ++
 		message.setHit(message.getHit()+1);
 		model.addAttribute("message", message);
 		return "message_detail";

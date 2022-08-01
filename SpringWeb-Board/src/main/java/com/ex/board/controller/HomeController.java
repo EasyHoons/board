@@ -27,24 +27,14 @@ public class HomeController {
 	        return "redirect:/message/list";
 	}
 	
-	@PreAuthorize("isAuthenticated()")
-	@RequestMapping("/mypage")
-		public String mypage(Model model, Principal  principal) {
-		
-		SiteUser siteUser = this.userService.getUser(principal.getName());
-		model.addAttribute("siteUser", siteUser);
-		
-		return "mypage";
-	}
-	
-	@GetMapping("/modify")
-	public String mypagemodify(UserModifyForm usermodifyform) {
-		
-
-		return "modify";
-	}
-	
-	
-	
+//	@PreAuthorize("isAuthenticated()")
+//	@RequestMapping("/mypage")
+//		public String mypage(Model model, Principal  principal) {
+//		
+//		SiteUser siteUser = this.userService.getUser(principal.getName());
+//		model.addAttribute("siteUser", siteUser);
+//		
+//		return "mypage";
+//	}
 
 }

@@ -10,7 +10,7 @@
 
             	<li class="nav-item">
             	<div th:if="${#httpServletRequest.requestURI != '/mypage'}">
-            		<a class="nav-link" sec:authorize="isAuthenticated()" th:text="${#authentication.getPrincipal().getUsername()}" th:href="@{/mypage}">mypage</a>
+            		<a class="nav-link" sec:authorize="isAuthenticated()" th:text="${#authentication.getPrincipal().getUsername()}" th:href="@{/user/mypage}">mypage</a>
             	</div>
             	</li>
                 <li class="nav-item">

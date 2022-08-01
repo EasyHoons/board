@@ -3,11 +3,11 @@
 
 	<div class="card border-success mb-3" style="width: 25rem;">
 	<div class="card-header" th:text="|비밀번호 변경|"></div>
-		<form class="form-inline mb-3" th:action="@{/mypage/modify}" th:object="${usermodifyform}" method="post">
+		<form class="form-inline mb-3" th:action="@{/user/modify}" th:object="${usermodifyform}" method="post">
+			<div th:replace="form_errors :: formErrorsFragment"></div>
 			<div class="form-group mx-sm-3"> 
 				<label for="password" class="form-label">new password</label> 
 				<input type="password" th:field="*{password2}" class="form-control" >
-
 				<button type="submit" class="btn btn-primary mr-2 mt-2" style="float: right;">변경</button>
 			</div>
 		</form>

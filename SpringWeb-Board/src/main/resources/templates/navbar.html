@@ -9,7 +9,7 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             	<li class="nav-item">
             	<div th:if="${#httpServletRequest.requestURI != '/mypage'}">
-            		<a class="nav-link" sec:authorize="hasRole('ROLE_USER')" th:text="${#authentication.getPrincipal().getUsername()}" th:href="@{/mypage}"></a>
+            		<a class="nav-link" sec:authorize="hasRole('ROLE_USER')" th:text="${#authentication.getPrincipal().getUsername()}" th:href="@{/user/mypage}">mypage</a>
             		<a class="nav-link" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin}">관리자 페이지</a>
             	</div>
             	</li>

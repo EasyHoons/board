@@ -38,7 +38,7 @@
 						class="delete btn btn-sm btn-outline-secondary"
 						th:data-uri="@{|/message/delete/${message.id}|}"
 						sec:authorize="isAuthenticated()"
-						th:if="${message.author != null and #authentication.getPrincipal().getUsername() == message.author.username}"
+						th:if="${message.author != null and #authentication.getPrincipal().getUsername() == message.author.username or #authentication.getPrincipal().authorities == "ROLE_ADMIN" }"
 						th:text="삭제"></a>
 				</div>
 			</div>

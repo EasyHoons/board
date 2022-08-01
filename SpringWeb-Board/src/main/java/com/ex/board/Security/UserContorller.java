@@ -1,5 +1,7 @@
 package com.ex.board.Security;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 import org.springframework.dao.DataIntegrityViolationException;
@@ -20,8 +22,6 @@ public class UserContorller {
 	
 	@GetMapping("/signup")
 	public String CreateUser(UserCreateForm userCreateForm) {
-		
-		
 		return "signup_form";
 	}
 	
@@ -49,6 +49,21 @@ public class UserContorller {
 		
 		return "redirect:/";
 	}
+	
+	@PostMapping("/mypage/modify")
+	public String ModifyUser(@Valid UserModifyForm usermodifyform, BindingResult bindingResult,Principal principal) {
+		
+		if(!this.userService.getUser(principal.getName()).getPassword().equals(usermodifyform.getPassword2())) {
+			bindingResult.rejectValue("password2", "passwordIncorrect","2개의 패스워드가 일치하지 않습니다.");
+			return "/mypage";
+		}
+		else {
+			//todo : 비밀번호 변경을 sysalert으로 변경
+			System.out.println("비밀번호 변경됨");
+		return "/mypage";}
+	}
+	
+	
 	
 	
 	@GetMapping("/login")

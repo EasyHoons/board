@@ -46,7 +46,9 @@ public class UserService{
 	public void modify(Long id, UserModifyForm usermodifyform) {
 		@SuppressWarnings("deprecation")
 		SiteUser siteuser=this.userRepository.getById(id);
+		
 		siteuser.setPassword(passwordEncoder.encode(usermodifyform.getPassword2()));
+		
 		this.userRepository.save(siteuser);
 	}
 

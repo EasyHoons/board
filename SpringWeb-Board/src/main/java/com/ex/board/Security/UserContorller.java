@@ -12,6 +12,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.RequiredArgsConstructor;
 
@@ -52,39 +54,35 @@ public class UserContorller {
 		return "redirect:/";
 	}
 
-	@GetMapping("/mypage")
+	@RequestMapping("/mypage")
 	public String ModifyUser(Model model, UserModifyForm usermodifyform,  Principal  principal) {
+
 		
 		SiteUser siteUser = this.userService.getUser(principal.getName());
-		model.addAttribute("siteUser", siteUser);
-		
+		model.addAttribute("siteUser", siteUser);		
 		model.addAttribute("usermodifyform",usermodifyform);
+		
+		
 		return "mypage";
 	}
 	
 	@PostMapping("/modify")
-	public String ModifyUser(@Valid UserModifyForm usermodifyform, BindingResult bindingResult,Principal principal) {
-
+	public String ModifyUser(@Valid UserModifyForm usermodifyform, BindingResult bindingResult,Principal principal,RedirectAttributes redirect) {
+		
+		String result="1";
+		
 		
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		if(encoder.matches(usermodifyform.getPassword1(), this.userService.getUser(principal.getName()).getPassword())){
-			System.out.println("========================================================Matches=========================================================");
-			System.out.println("========================================================Matches=========================================================");
-			System.out.println("========================================================Matches=========================================================");
-			System.out.println("========================================================Matches=========================================================");
-			
 			SiteUser siteUser = this.userService.getUser(principal.getName());
-			this.userService.modify(siteUser.getId(), usermodifyform);}
-		if(!encoder.matches(usermodifyform.getPassword1(), this.userService.getUser(principal.getName()).getPassword())) {
-		System.out.println("========================================================Not Matches=========================================================");
-		System.out.println("========================================================Not Matches=========================================================");
-		System.out.println("========================================================Not Matches=========================================================");
-		System.out.println("========================================================Not Matches=========================================================");}
-		
-
-		
-			//todo : 비밀번호 변경을 sysalert으로 변경
-		return "redirect:/user/mypage";
+			this.userService.modify(siteUser.getId(), usermodifyform);
+			result="2";
+			redirect.addAttribute("result",result);
+			
+			return "redirect:/user/mypage";
+	
+		}
+		return "redirect:/user/mypage";	
 	}
 
 	@GetMapping("/login")

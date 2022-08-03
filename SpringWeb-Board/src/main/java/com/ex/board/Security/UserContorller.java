@@ -12,8 +12,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.ex.board.service.CommentService;
+import com.ex.board.service.MessageService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,6 +25,8 @@ import lombok.RequiredArgsConstructor;
 public class UserContorller {
 	
 	private final UserService userService;
+	private final MessageService messageService;
+	private final CommentService commentService;
 		
 	@GetMapping("/signup")
 	public String CreateUser(UserCreateForm userCreateForm) {
@@ -61,11 +65,13 @@ public class UserContorller {
 		SiteUser siteUser = this.userService.getUser(principal.getName());
 		model.addAttribute("siteUser", siteUser);		
 		model.addAttribute("usermodifyform",usermodifyform);
-		
+		model.addAttribute("totalcomment",this.commentService.usersTotalComment(siteUser));
+		model.addAttribute("totalmessage",this.messageService.usersTotalMessage(siteUser));
 		
 		return "mypage";
 	}
 	
+	//비밀번호 변경. 작업 수행후 리다이렉트 mypage
 	@PostMapping("/modify")
 	public String ModifyUser(@Valid UserModifyForm usermodifyform, BindingResult bindingResult,Principal principal,RedirectAttributes redirect) {
 		
@@ -89,5 +95,7 @@ public class UserContorller {
 	public String login() {
 		return "login_form";
 	}
+	
+	
 	
 }

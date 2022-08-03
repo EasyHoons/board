@@ -6,10 +6,10 @@
 		<ul class="list-group list-group-flush">
 			<li class="list-group-item" th:text="|name : ${siteUser.username}"></li>
 			<li class="list-group-item" th:text="|mail : ${siteUser.email}|"></li>
-			<li class="list-group-item" th:text="|password : ${siteUser.password}|"></li>
-			<li class="list-group-item text-warning" th:text="|내가 쓴 글 수 : todo...|"></li>
-			<li class="list-group-item text-warning" th:text="|내가 쓴 댓글 수 : todo...|"></li>
-
+			<li class="list-group-item">내가 쓴 글 수 : <a class= "text-success" th:text="|${totalmessage}|" href="#"></a></li>
+			<li class="list-group-item">내가 쓴 댓글 수 : <a class= "text-success" th:text="|${totalcomment}|" href="#"></a></li>
+			
+		</ul>
 	</div>
 
 

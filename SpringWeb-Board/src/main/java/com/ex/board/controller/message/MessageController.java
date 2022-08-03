@@ -1,6 +1,7 @@
 package com.ex.board.controller.message;
 
 import java.security.Principal;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -121,6 +122,21 @@ public class MessageController {
         return "redirect:/";
     }
 	 
+	//삭제. id로 부른 오브젝트를 삭제.
+		@PreAuthorize("isAuthenticated()")
+	    @GetMapping("check/{ids}")
+	    public String CheckBoxDelete(@PathVariable("ids") List<Integer> ids) {
+			
+			for(Integer id : ids) {
+				Message message = this.messageService.getMessage(id);
+	//	        if (!message.getAuthor().getUsername().equals(principal.getName())) {
+	//	            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
+	//	        }
+		        this.messageService.delete(message);
+			}
+	        return "redirect:/";
+	    }
+	
 	@PreAuthorize("isAuthenticated()")
     @GetMapping("/vote/{id}")
     public String questionVote(Principal principal, @PathVariable("id") Integer id) {

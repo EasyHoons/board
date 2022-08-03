@@ -11,7 +11,6 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -44,6 +43,7 @@ public class MessageService {
 		return message.get();
 		}
 	
+	
 	public void create(String subject, String content, SiteUser user) {
 		Message ms = new Message();
 		ms.setSubject(subject);
@@ -62,7 +62,7 @@ public class MessageService {
 				Join<Message, Comment> a = q.join("commentList", JoinType.LEFT);
 				Join<Comment, SiteUser> u2 = a.join("author", JoinType.LEFT);
 				
-				if(Type.equalsIgnoreCase("3")) {
+				if(Type.equalsIgnoreCase("author")) {
 					return	cb.or(cb.like(u1.get("username"), "%" + kw + "%"),    // 질문 작성자 
 						cb.like(u2.get("username"), "%" + kw + "%"));   // 답변 작성자
 				}
@@ -102,6 +102,7 @@ public class MessageService {
 	 public void delete(Message message) {
 	        this.messageRepository.delete(message);
 	    }
+	 
 	 //추천 
 	 public void vote(Message message, SiteUser siteUser) {
 	        message.getVoter().add(siteUser);

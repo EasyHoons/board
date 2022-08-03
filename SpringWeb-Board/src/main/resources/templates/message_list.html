@@ -5,14 +5,14 @@
         <div class="col-6">
             <a th:href="@{/message/create}" class="btn btn-primary">게시물 등록하기</a>
         </div>
+        <!-- 검색창 시작 -->
         <div class="col-6">
             <div class="input-group">
             	<select name="searchType" id="searchType">
-                    <option value="1">제목+내용</option>
+                    <option value="title_content">제목+내용</option>
                     <option value="comment">댓글</option>
-                    <option value="3">작성자</option>
+                    <option value="author">작성자</option>
                 </select>
-            	
                 <input type="text" id="search_kw" class="form-control" th:value="${kw}">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="button"  id="btn_search">찾기</button>
@@ -20,7 +20,7 @@
             </div>
         </div>
     </div>
-	<!-- /검색창 -->
+	<!-- /검색창 끝 -->
 	<table class="table">
     <thead class="table-dark">
         <tr class="text-center">
@@ -29,6 +29,7 @@
             <th>글쓴이</th>
             <th>조회수</th>
             <th>작성일시</th>
+            <th sec:authorize="hasRole('ROLE_ADMIN')"> </th>
         </tr>
     </thead>
     
@@ -45,9 +46,17 @@
             <td th:text=${message.hit}></td>
             <td th:text="${#temporals.format(message.createDate, 'yyyy-MM-dd HH:mm')}"></td>
             
+            <!--  관리자 글 체크박스 기능  -->
+            <td sec:authorize="hasRole('ROLE_ADMIN')">
+            	<input type="checkbox" name="check_lists" th:value="${message.id}">
+            </td>
         </tr>
-    
 </table>
+
+<!--  관리자 삭제 버튼  -->
+<div sec:authorize="hasRole('ROLE_ADMIN')" align="right">
+	<button href="javascript:void(0);" type="button" class="btn btn-outline-secondary" th:text="삭제"></button>
+</div> 
 
  <!-- 페이징처리 시작 -->
 	<div th:if="${!paging.isEmpty()}">
@@ -108,9 +117,10 @@
 				href="javascript:void(0)" th:data-page="${paging.totalPages-1}">
 					<span class="sr-only">마지막</span> <span>&raquo;</span>
 			</a></li>
+			
+			
 		</ul>
-
-
+	
 	</div>
 
 	<!-- 페이징처리 끝 -->
@@ -119,9 +129,13 @@
         <input type="hidden" id="Type" name="Type" th:value="${Type}">
         <input type="hidden" id="page" name="page" th:value="${paging.number}">
     </form>
+
 </div>
+	
 <script layout:fragment="javaScript" type='text/javascript'>
- 
+
+
+
 const page_elements = document.getElementsByClassName("page-link");
 	Array.from(page_elements).forEach(function(element) {
 	    element.addEventListener('click', function() {
@@ -130,7 +144,22 @@ const page_elements = document.getElementsByClassName("page-link");
 	    });
 	});
 	
-	
+ const delete_elements = document.getElementsByClassName("btn");
+	Array.from(delete_elements).forEach(function(element) {
+	    element.addEventListener('click', function() {
+	        if(confirm("정말로 삭제하시겠습니까?")) {
+	    		var sum = [];
+	    		var check_length = document.getElementsByName("check_lists").length
+	    		  for(var i=0; i < check_length; i++ ){
+	    		       if( document.getElementsByName("check_lists")[i].checked == true ){
+	    					var count = sum.push(document.getElementsByName("check_lists")[i].value);
+	    				}
+	    		  } 
+	    		location.href = "/message/check/" + sum;
+	        };
+	    });
+	});
+ 
 /* 추후 수정 필요 */	
 const btn_search = document.getElementById("btn_search");
 	

@@ -57,4 +57,8 @@ public class CommentService {
         this.commentRepository.save(comment);
     }
 	
+	public Long usersTotalComment(SiteUser user) {
+		long totalcomment = this.commentRepository.countByAuthor(user);
+		return totalcomment; 
+	}
 }

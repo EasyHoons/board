@@ -3,12 +3,22 @@ package com.ex.board.Security;
 import java.security.Principal;
 import java.util.Optional;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ex.board.entity.comment.Comment;
+import com.ex.board.entity.message.Message;
 import com.ex.board.service.DataNotFoundException;
 
 import lombok.RequiredArgsConstructor;
@@ -42,13 +52,18 @@ public class UserService{
         	throw new DataNotFoundException("siteuser not found");
         }
     }
-	
+	//todo : 회원정보 변경
+	//비밀번호 변경
 	public void modify(Long id, UserModifyForm usermodifyform) {
 		@SuppressWarnings("deprecation")
 		SiteUser siteuser=this.userRepository.getById(id);
+		
 		siteuser.setPassword(passwordEncoder.encode(usermodifyform.getPassword2()));
+		
 		this.userRepository.save(siteuser);
 	}
+	
+	
 
 	
 }

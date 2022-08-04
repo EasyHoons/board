@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.ex.board.Security.SiteUser;
 import com.ex.board.Security.UserModifyForm;
 import com.ex.board.Security.UserService;
+import com.ex.board.repository.MessageRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Controller
 public class HomeController {
-
+	private final MessageRepository messageRepository;
 	private final UserService userService;
 	
 	@RequestMapping("/")
@@ -43,5 +44,15 @@ public class HomeController {
 	}
 	
 	
+	
+//	@PreAuthorize("isAuthenticated()")
+//	@RequestMapping("/mypage")
+//		public String mypage(Model model, Principal  principal) {
+//		
+//		SiteUser siteUser = this.userService.getUser(principal.getName());
+//		model.addAttribute("siteUser", siteUser);
+//		
+//		return "mypage";
+//	}
 	
 }

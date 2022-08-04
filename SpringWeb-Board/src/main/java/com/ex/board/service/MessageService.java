@@ -108,5 +108,12 @@ public class MessageService {
 	        message.getVoter().add(siteUser);
 	        this.messageRepository.save(message);
 	    }
+	 
+	 //user 에 대한 Message 수
+	public Long usersTotalMessage(SiteUser user) {
+			Long totalmessage = this.messageRepository.countByAuthor(user);
+			return totalmessage; 
+		}
+
 
 }

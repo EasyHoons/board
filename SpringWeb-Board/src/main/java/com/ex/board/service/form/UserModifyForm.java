@@ -1,4 +1,4 @@
-package com.ex.board.Security;
+package com.ex.board.service.form;
 
 import javax.validation.constraints.NotEmpty;
 

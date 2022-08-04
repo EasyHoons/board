@@ -1,4 +1,4 @@
-package com.ex.board.controller.message;
+package com.ex.board.controller;
 
 import java.security.Principal;
 import java.util.List;
@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ex.board.Security.SiteUser;
-import com.ex.board.Security.UserService;
-import com.ex.board.entity.message.Message;
-import com.ex.board.service.CommentForm;
-import com.ex.board.service.MessageForm;
+import com.ex.board.entity.Message;
+import com.ex.board.entity.SiteUser;
 import com.ex.board.service.MessageService;
+import com.ex.board.service.UserService;
+import com.ex.board.service.form.CommentForm;
+import com.ex.board.service.form.MessageForm;
 
 import lombok.RequiredArgsConstructor;
 

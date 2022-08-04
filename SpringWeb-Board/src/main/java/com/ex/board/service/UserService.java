@@ -1,4 +1,4 @@
-package com.ex.board.Security;
+package com.ex.board.service;
 
 import java.security.Principal;
 import java.util.Optional;
@@ -17,9 +17,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.ex.board.entity.comment.Comment;
-import com.ex.board.entity.message.Message;
-import com.ex.board.service.DataNotFoundException;
+import com.ex.board.entity.Comment;
+import com.ex.board.entity.Message;
+import com.ex.board.entity.SiteUser;
+import com.ex.board.repository.UserRepository;
+import com.ex.board.service.form.DataNotFoundException;
+import com.ex.board.service.form.UserModifyForm;
 
 import lombok.RequiredArgsConstructor;
 

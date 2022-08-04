@@ -1,4 +1,4 @@
-package com.ex.board.entity.comment;
+package com.ex.board.entity;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -10,9 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-
-import com.ex.board.Security.SiteUser;
-import com.ex.board.entity.message.Message;
 
 import lombok.Getter;
 import lombok.Setter;

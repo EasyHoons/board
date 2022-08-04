@@ -1,4 +1,4 @@
-package com.ex.board.controller.comment;
+package com.ex.board.controller;
 
 
 import java.security.Principal;
@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.ex.board.Security.SiteUser;
-import com.ex.board.Security.UserService;
-import com.ex.board.entity.comment.Comment;
-import com.ex.board.entity.message.Message;
-import com.ex.board.service.CommentForm;
+import com.ex.board.entity.Comment;
+import com.ex.board.entity.Message;
+import com.ex.board.entity.SiteUser;
 import com.ex.board.service.CommentService;
 import com.ex.board.service.MessageService;
+import com.ex.board.service.UserService;
+import com.ex.board.service.form.CommentForm;
 
 import lombok.RequiredArgsConstructor;
 

@@ -11,8 +11,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ex.board.Security.SiteUser;
-import com.ex.board.entity.message.Message;
+import com.ex.board.entity.Message;
+import com.ex.board.entity.SiteUser;
 
 public interface MessageRepository extends JpaRepository<Message, Integer>{
 	 

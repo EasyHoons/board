@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.ex.board.Security.SiteUser;
-import com.ex.board.Security.UserRepository;
-import com.ex.board.entity.message.Message;
+import com.ex.board.entity.Message;
+import com.ex.board.entity.SiteUser;
 import com.ex.board.repository.MessageRepository;
+import com.ex.board.repository.UserRepository;
 import com.ex.board.service.MessageService;
 
 @SpringBootTest

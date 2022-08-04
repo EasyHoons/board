@@ -5,10 +5,11 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.ex.board.Security.SiteUser;
-import com.ex.board.entity.comment.Comment;
-import com.ex.board.entity.message.Message;
-import com.ex.board.repository.comment.CommentRepository;
+import com.ex.board.entity.Comment;
+import com.ex.board.entity.Message;
+import com.ex.board.entity.SiteUser;
+import com.ex.board.repository.CommentRepository;
+import com.ex.board.service.form.DataNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 

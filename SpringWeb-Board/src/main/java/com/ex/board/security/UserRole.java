@@ -1,4 +1,4 @@
-package com.ex.board.Security;
+package com.ex.board.security;
 
 import lombok.Getter;
 

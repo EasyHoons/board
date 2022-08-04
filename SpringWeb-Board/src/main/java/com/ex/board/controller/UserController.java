@@ -1,4 +1,4 @@
-package com.ex.board.Security;
+package com.ex.board.controller;
 
 import java.security.Principal;
 
@@ -14,15 +14,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ex.board.entity.SiteUser;
 import com.ex.board.service.CommentService;
 import com.ex.board.service.MessageService;
+import com.ex.board.service.UserService;
+import com.ex.board.service.form.UserCreateForm;
+import com.ex.board.service.form.UserModifyForm;
 
 import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/user")
-public class UserContorller {
+public class UserController {
 	
 	private final UserService userService;
 	private final MessageService messageService;

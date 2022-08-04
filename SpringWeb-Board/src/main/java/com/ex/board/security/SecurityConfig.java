@@ -1,4 +1,4 @@
-package com.ex.board.Security;
+package com.ex.board.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

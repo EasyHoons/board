@@ -8,10 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.ex.board.Security.SiteUser;
-import com.ex.board.Security.UserModifyForm;
-import com.ex.board.Security.UserService;
+import com.ex.board.entity.SiteUser;
 import com.ex.board.repository.MessageRepository;
+import com.ex.board.service.UserService;
+import com.ex.board.service.form.UserModifyForm;
 
 import lombok.RequiredArgsConstructor;
 

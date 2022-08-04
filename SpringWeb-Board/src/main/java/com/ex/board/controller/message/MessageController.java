@@ -122,7 +122,7 @@ public class MessageController {
         return "redirect:/";
     }
 	 
-	//삭제. id로 부른 오브젝트를 삭제.
+	//삭제. check삭
 		@PreAuthorize("isAuthenticated()")
 	    @GetMapping("check/{ids}")
 	    public String CheckBoxDelete(@PathVariable("ids") List<Integer> ids) {

@@ -55,7 +55,7 @@
 
 <!--  관리자 삭제 버튼  -->
 <div sec:authorize="hasRole('ROLE_ADMIN')" align="right">
-	<button href="javascript:void(0);" type="button" class="btn btn-outline-secondary" th:text="삭제"></button>
+	<button href="javascript:void(0);" type="button" class="check btn-outline-secondary" th:text="삭제"></button>
 </div> 
 
  <!-- 페이징처리 시작 -->
@@ -143,19 +143,19 @@ const page_elements = document.getElementsByClassName("page-link");
 	        document.getElementById('searchForm').submit();
 	    });
 	});
-	
- const delete_elements = document.getElementsByClassName("btn");
+/* 체크박스 기능 추가 부분 */
+ const delete_elements = document.getElementsByClassName("check");
 	Array.from(delete_elements).forEach(function(element) {
 	    element.addEventListener('click', function() {
 	        if(confirm("정말로 삭제하시겠습니까?")) {
-	    		var sum = [];
+	    		var arr = [];
 	    		var check_length = document.getElementsByName("check_lists").length
 	    		  for(var i=0; i < check_length; i++ ){
 	    		       if( document.getElementsByName("check_lists")[i].checked == true ){
-	    					var count = sum.push(document.getElementsByName("check_lists")[i].value);
+	    					var Check_list = arr.push(document.getElementsByName("check_lists")[i].value);
 	    				}
 	    		  } 
-	    		location.href = "/message/check/" + sum;
+	    		location.href = "/message/check/" + arr;
 	        };
 	    });
 	});

@@ -1,6 +1,7 @@
 package com.ex.board.controller.message;
 
 import java.security.Principal;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -51,6 +52,8 @@ public class MessageController {
 	@Transactional
 	public String detail(Model model, @PathVariable Integer id, CommentForm commentForm) {
 		Message message = this.messageService.getMessage(id);
+		
+		//디테일페이지를 호출할때 Hit Count ++
 		message.setHit(message.getHit()+1);
 		model.addAttribute("message", message);
 		return "message_detail";
@@ -119,6 +122,21 @@ public class MessageController {
         return "redirect:/";
     }
 	 
+	//삭제. check삭
+		@PreAuthorize("isAuthenticated()")
+	    @GetMapping("check/{ids}")
+	    public String CheckBoxDelete(@PathVariable("ids") List<Integer> ids) {
+			
+			for(Integer id : ids) {
+				Message message = this.messageService.getMessage(id);
+	//	        if (!message.getAuthor().getUsername().equals(principal.getName())) {
+	//	            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
+	//	        }
+		        this.messageService.delete(message);
+			}
+	        return "redirect:/";
+	    }
+	
 	@PreAuthorize("isAuthenticated()")
     @GetMapping("/vote/{id}")
     public String questionVote(Principal principal, @PathVariable("id") Integer id) {

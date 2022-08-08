@@ -1,6 +1,8 @@
 package com.ex.board.service.form;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,9 +11,13 @@ import lombok.Setter;
 @Setter
 public class UserModifyForm {
 
-	@NotEmpty(message = "Password를 입력하십시오.")
-	private String password1;//확인패스워드입력
-	@NotEmpty(message = "Password를 입력하십시오.")
-	private String password2;//확인패스워드입력
-
+	private String username;
+	
+	private String password1;
+	
+	private String password2;
+	
+	@Email
+	private String email;
+	
 }

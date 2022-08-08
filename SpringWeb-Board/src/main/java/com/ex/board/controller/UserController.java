@@ -4,6 +4,7 @@ import java.security.Principal;
 
 import javax.validation.Valid;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import com.ex.board.entity.SiteUser;
 import com.ex.board.service.CommentService;
 import com.ex.board.service.MessageService;
 import com.ex.board.service.UserService;
+import com.ex.board.service.form.PwCompareForm;
 import com.ex.board.service.form.UserCreateForm;
 import com.ex.board.service.form.UserModifyForm;
 
@@ -31,6 +33,12 @@ public class UserController {
 	private final UserService userService;
 	private final MessageService messageService;
 	private final CommentService commentService;
+
+	@GetMapping("/login")
+	public String login() {
+		
+		return "login_form";
+	}
 		
 	@GetMapping("/signup")
 	public String CreateUser(UserCreateForm userCreateForm) {
@@ -63,43 +71,70 @@ public class UserController {
 	}
 
 	@RequestMapping("/mypage")
-	public String ModifyUser(Model model, UserModifyForm usermodifyform,  Principal  principal) {
+	public String ModifyUser(Model model, PwCompareForm pwcompareform,  Principal  principal) {
 
 		
 		SiteUser siteUser = this.userService.getUser(principal.getName());
 		model.addAttribute("siteUser", siteUser);		
-		model.addAttribute("usermodifyform",usermodifyform);
+		model.addAttribute("pwcompareform",pwcompareform);
 		model.addAttribute("totalcomment",this.commentService.usersTotalComment(siteUser));
 		model.addAttribute("totalmessage",this.messageService.usersTotalMessage(siteUser));
 		
 		return "mypage";
 	}
 	
-	//비밀번호 변경. 작업 수행후 리다이렉트 mypage
+	//비밀번호 체크. 작업 수행후 리다이렉트 mypage
 	@PostMapping("/modify")
-	public String ModifyUser(@Valid UserModifyForm usermodifyform, BindingResult bindingResult,Principal principal,RedirectAttributes redirect) {
+	public String ModifyUser(@Valid PwCompareForm pwcompareform, BindingResult bindingResult,Principal principal,RedirectAttributes redirect) {
 		
 		String result="1";
 		
 		
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		if(encoder.matches(usermodifyform.getPassword1(), this.userService.getUser(principal.getName()).getPassword())){
-			SiteUser siteUser = this.userService.getUser(principal.getName());
-			this.userService.modify(siteUser.getId(), usermodifyform);
-			result="2";
-			redirect.addAttribute("result",result);
-			
-			return "redirect:/user/mypage";
-	
+		if(encoder.matches(pwcompareform.getPassword1(), this.userService.getUser(principal.getName()).getPassword())){//입력받은 비밀번호가 현재 유저의 비밀번호와 같음.
+			return "redirect:/user/infomodify";
 		}
-		return "redirect:/user/mypage";	
+		else {
+		result="2";
+		redirect.addAttribute("result",result);
+		return "redirect:/user/mypage";
+		}	
 	}
+	
+	@GetMapping("/infomodify")
+	public String infoModify(UserModifyForm userModifyForm, Principal principal, Model model){
+		
+		SiteUser siteUser = this.userService.getUser(principal.getName());
+		model.addAttribute("userModifyForm", userModifyForm);
+		model.addAttribute("siteUser", siteUser);
+		
+		return "info_modify";
+	}
+	
+	@PostMapping("/infomodify")
+	public String infoModify(@Valid UserModifyForm userModifyForm, BindingResult bindingResult, Principal principal, Model model ) {
+		
+		//todo : 회원가입폼과 비슷하게 만들기
+		SiteUser siteUser = this.userService.getUser(principal.getName());
+		long id = siteUser.getId();
+		model.addAttribute("siteUser", siteUser);
 
-	@GetMapping("/login")
-	public String login() {
-		return "login_form";
+		if(bindingResult.hasErrors()) {
+			return "info_modify";
+		}
+		
+		if(!userModifyForm.getPassword1().equals(userModifyForm.getPassword2())) {
+			bindingResult.rejectValue("password2", "passwordIncorrect","2개의 패스워드가 일치하지 않습니다.");
+			return "info_modify";
+		}
+		try {
+			this.userService.modify(id, userModifyForm.getUsername(), userModifyForm.getEmail(),
+					userModifyForm.getPassword1());
+		} catch (DataIntegrityViolationException e) {			
+			bindingResult.reject("email duplicated","중복된 이메일입니다.");
+			return "info_modify";
+		} 
+		return "redirect:/";
 	}
-	
-	
 	
 }

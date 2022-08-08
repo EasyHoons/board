@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.ex.board.entity.SiteUser;
 import com.ex.board.repository.MessageRepository;
 import com.ex.board.service.UserService;
-import com.ex.board.service.form.UserModifyForm;
+import com.ex.board.service.form.PwCompareForm;
 
 import lombok.RequiredArgsConstructor;
 
@@ -37,7 +37,7 @@ public class HomeController {
 	}
 	
 	@GetMapping("/modify")
-	public String mypagemodify(Model model, UserModifyForm userModifyform) {
+	public String mypagemodify(Model model, PwCompareForm userModifyform) {
 		
 		model.addAttribute("userModifyform",userModifyform);
 		return "modify";

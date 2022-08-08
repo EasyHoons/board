@@ -22,7 +22,7 @@ import com.ex.board.entity.Message;
 import com.ex.board.entity.SiteUser;
 import com.ex.board.repository.UserRepository;
 import com.ex.board.service.form.DataNotFoundException;
-import com.ex.board.service.form.UserModifyForm;
+import com.ex.board.service.form.PwCompareForm;
 
 import lombok.RequiredArgsConstructor;
 
@@ -55,13 +55,16 @@ public class UserService{
         	throw new DataNotFoundException("siteuser not found");
         }
     }
-	//todo : 회원정보 변경
-	//비밀번호 변경
-	public void modify(Long id, UserModifyForm usermodifyform) {
+	
+	// 회원정보 변경
+	public void modify(Long id, String username, String email, String password) {
+		
 		@SuppressWarnings("deprecation")
 		SiteUser siteuser=this.userRepository.getById(id);
+		if(email!="") siteuser.setEmail(email);//받은 email값이 ""면 변경하지않는다.
 		
-		siteuser.setPassword(passwordEncoder.encode(usermodifyform.getPassword2()));
+		siteuser.setPassword(passwordEncoder.encode(password));
+		
 		
 		this.userRepository.save(siteuser);
 	}
